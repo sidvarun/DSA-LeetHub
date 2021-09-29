@@ -1,9 +1,9 @@
 class TrieNode{
     public:
-        vector<TrieNode*> next;
+        vector<TrieNode*> children;
         bool isWord = false;
         TrieNode(){
-            next.resize(26, NULL);
+            children.resize(26, NULL);
         }
 };
 
@@ -19,10 +19,10 @@ public:
     void addWord(string word) {
         TrieNode* current = root;
         for(char ch:word){
-            if(!current->next[ch - 'a']){
-                current->next[ch - 'a'] = new TrieNode();
+            if(!current->children[ch - 'a']){
+                current->children[ch - 'a'] = new TrieNode();
             }
-            current = current->next[ch - 'a'];
+            current = current->children[ch - 'a'];
         }
         current->isWord = true;
     }
@@ -37,13 +37,13 @@ private:
         for(int i = 0; i < word.size(); i++){
             char ch = word[i];
             if(ch != '.'){
-                if(!current->next[ch - 'a']) 
+                if(!current->children[ch - 'a']) 
                     return false;
-                current = current->next[ch - 'a'];
+                current = current->children[ch - 'a'];
             }
             else{
                 for(int j = 0; j < 26; j++){
-                    if(current->next[j] && searchHelper(word.substr(i + 1), current->next[j])){
+                    if(current->children[j] && searchHelper(word.substr(i + 1), current->children[j])){
                         return true;
                     }
                 }
