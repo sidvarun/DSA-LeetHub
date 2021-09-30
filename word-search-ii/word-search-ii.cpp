@@ -65,7 +65,7 @@ public:
 };
 class Solution {
 public:
-    map<string, int> subres;
+    unordered_map<string, int> subres;
     vector<string> res;
     Trie* dict;
     Solution(){
