@@ -6,26 +6,24 @@ public:
             return res; 
         sort(nums.begin(), nums.end());
       
-        for(int i = 0; i<nums.size() - 1; i++){
-            int front = i + 1;
-            int back = nums.size() - 1;
-            int sum = nums[i] * -1;
-            while(front < back){
-                if(nums[front] + nums[back] < sum)
-                    front++;
-                else if(nums[front] + nums[back] > sum)
-                    back--;
+        for(int i = 0; i<nums.size(); i++){
+            if(i > 0 && nums[i] == nums[i - 1])
+                continue;
+            int left = i + 1;
+            int right = nums.size() - 1;
+            while(left < right){
+                int sum = nums[left] + nums[right] + nums[i];
+                if(sum > 0)
+                    right--;
+                else if(sum < 0)
+                    left++;
                 else{
-                    vector<int> v = {nums[i], nums[front], nums[back]};
-                    res.push_back(v);
-                    while(front < back && nums[back] == v[2])
-                        back--;
-                    while(front < back && nums[front] == v[1])
-                        front++;
+                    res.push_back({nums[i], nums[left], nums[right]});
+                    left++;
+                    while(left<right && nums[left] == nums[left-1])
+                        left++;
                 }
             }
-            while(i + 1 < nums.size() && nums[i+1] == nums[i])
-                i++;
         }
         return res;
     }
