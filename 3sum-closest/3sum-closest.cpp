@@ -18,8 +18,8 @@ public:
                         ans = sum;
                     }
                     left++;
-                    while(left < right && nums[left] == nums[left - 1])
-                        left++;
+                    // while(left < right && nums[left] == nums[left - 1])
+                    //     left++;
                 }
                 else if(sum > target){
                     if(sum - target < res){
@@ -27,8 +27,8 @@ public:
                         ans = sum;
                     }
                     right--;
-                    while(left < right && nums[right] == nums[right + 1])
-                        right--;
+                    // while(left < right && nums[right] == nums[right + 1])
+                    //     right--;
                 }
                 else 
                     return target;
