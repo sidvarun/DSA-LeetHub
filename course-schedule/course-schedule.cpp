@@ -1,63 +1,30 @@
 class Solution {
 public:
-    bool val;
-    // bool dfs(vector<vector<int>> adj, vector<bool> &visited, int u, vector<bool> &st){
-    //     visited[u] = true;
-    //     st[u] = true;
-    //     for(auto v : adj[u]){
-    //         if(!visited[v] && dfs(adj, visited, v, st))
-    //             return true;
-    //         else if(st[v] == true)
-    //             return true;
-    //     }
-    //     st[u] = false;
-    //     return false;
-    // }
-    bool isCyclic(int N, vector<vector<int>> adj) {
-        queue<int> q; 
-	    vector<int> indegree(N, 0); 
-	    for(int i = 0;i<N;i++) {
-	        for(auto it: adj[i]) {
-	            indegree[it]++; 
-	        }
-	    }
-	    
-	    for(int i = 0;i<N;i++) {
-	        if(indegree[i] == 0) {
-	            q.push(i); 
-	        }
-	    }
-	    int cnt = 0;
-	    while(!q.empty()) {
-	        int node = q.front(); 
-	        q.pop(); 
-	        cnt++; 
-	        for(auto it : adj[node]) {
-	            indegree[it]--;
-	            if(indegree[it] == 0) {
-	                q.push(it); 
-	            }
-	        }
-	    }
-	    if(cnt == N) return false; 
-	    return true; 
-	}
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-        val = true;
         vector<vector<int>> adj(numCourses);
-        for(int i = 0; i<prerequisites.size(); i++){
+        for(int i = 0; i<prerequisites.size(); i++)
             adj[prerequisites[i][1]].push_back(prerequisites[i][0]);
+        vector<int> visited(numCourses, 0);
+        queue<int> q;
+        int n = numCourses;
+        vector<int> indegree(n, 0);
+        for(int i = 0; i<n; i++)
+            for(auto u : adj[i])
+                indegree[u]++;
+        for(int i = 0; i<n; i++)
+            if(indegree[i] == 0)
+                q.push(i);
+        int count = 0;
+        while(!q.empty()){
+            int u = q.front();
+            q.pop();
+            count++;
+            for(auto i : adj[u]){
+                indegree[i]--;
+                if(indegree[i] == 0)
+                    q.push(i);
+            }
         }
-        // vector<bool> visited(numCourses, false);
-        // vector<bool> st(numCourses, false);
-        // for(int i = 0; i < numCourses; i++){
-        //     if(adj[i].size() && !visited[i])
-        //         if(dfs(adj, visited, i, st))
-        //             return false;
-        // }
-//         for(int i = 0; i < numCourses; i++){
-            
-//         }
-        return !isCyclic(numCourses, adj);
+        return count == numCourses;
     }
 };
