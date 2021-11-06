@@ -18,9 +18,6 @@ public:
             int mid = l + (r - l) / 2;
             int val = arr[mid].second;
             if(val <= timestamp){
-                // while(mid < arr.size() && arr[mid].second <= timestamp)
-                //     mid++;
-                // return arr[mid - 1].first;
                 l = mid + 1;
                 res = arr[mid].first;
             }
